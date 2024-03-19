@@ -65,25 +65,25 @@ export const fetchPokemonsByType = async (typeName: string): Promise<PokemonDeta
 };
 
 // Example for fetching based on gender, assuming API supports it directly
-export const fetchPokemonsByGender = async (genderName: string): Promise<PokemonDetail[]> => {
-  const pokemons = await fetchResource<genderDetail[]>("gender", genderName);
-  console.log("test", pokemons.pokemon_species_details);
-  return Promise.all(
-    pokemons.pokemon_species_details.map((entry: genderDetail) =>
-      fetchPokemonByNameOrId(entry.pokemon_species.name)
-    )
-  );
-};
+// export const fetchPokemonsByGender = async (genderName: string): Promise<PokemonDetail[]> => {
+//   const pokemons = await fetchResource<genderDetail[]>("gender", genderName);
+//   console.log("test", pokemons.pokemon_species_details);
+//   return Promise.all(
+//     pokemons.pokemon_species_details.map((entry: genderDetail) =>
+//       fetchPokemonByNameOrId(entry.pokemon_species.name)
+//     )
+//   );
+// };
 
 // Fetch Pokémons by color
-export const fetchPokemonsByColor = async (colorName: string): Promise<PokemonDetail[]> => {
-  const pokemon = await fetchResource<{ pokemon: { pokemon: { name: string } }[] }>(
-    "pokemon-color",
-    colorName
-  );
-  console.log(pokemon);
-  return Promise.all(pokemon.pokemon_species.map((entry) => fetchPokemonByNameOrId(entry.name)));
-};
+// export const fetchPokemonsByColor = async (colorName: string): Promise<PokemonDetail[]> => {
+//   const pokemon = await fetchResource<{ pokemon: { pokemon: { name: string } }[] }>(
+//     "pokemon-color",
+//     colorName
+//   );
+//   console.log(pokemon);
+//   return Promise.all(pokemon.pokemon_species.map((entry) => fetchPokemonByNameOrId(entry.name)));
+// };
 
 // Fetch Pokémons by ability
 export const fetchPokemonsByAbility = async (abilityName: string): Promise<PokemonDetail[]> => {

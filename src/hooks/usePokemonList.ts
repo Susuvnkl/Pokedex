@@ -4,9 +4,9 @@ import {
   fetchPokemonByNameOrId,
   fetchPokemons,
   fetchPokemonsByType,
-  fetchPokemonsByGender,
+  // fetchPokemonsByGender,
   fetchPokemonsByAbility,
-  fetchPokemonsByColor,
+  // fetchPokemonsByColor,
 } from "@/api/pokemonApi";
 
 export type Filter = {
@@ -30,15 +30,15 @@ export const usePokemonList = (filter: Filter) => {
     if (filter.type) {
       return await fetchPokemonsByType(filter.type);
     }
-    if (filter.gender) {
-      return await fetchPokemonsByGender(filter.gender);
-    }
+    // if (filter.gender) {
+    //   return await fetchPokemonsByGender(filter.gender);
+    // }
     if (filter.ability) {
       return await fetchPokemonsByAbility(filter.ability);
     }
-    if (filter.color) {
-      return await fetchPokemonsByColor(filter.color);
-    }
+    // if (filter.color) {
+    //   return await fetchPokemonsByColor(filter.color);
+    // }
 
     // Default fetch if no specific filter is applied
     return await fetchPokemons();
