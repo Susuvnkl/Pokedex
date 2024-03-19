@@ -1,28 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import PokemonCard from "./PokemonCard";
-import { Filter, usePokemonList } from "@/hooks/usePokemonList";
 import { usePokemonContext } from "@/context/PokemonContext";
 import CustomCursor from "../CustomCursor/CustomCursor";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGetPokemons } from "@/hooks/useGetPokemons";
 
-interface PokemonGridProps {
-  filter: Filter;
-}
-
-function PokemonGrid(props: PokemonGridProps) {
-  const { filter } = props;
-  const { pokemons, isLoading, error } = usePokemonList(filter);
+function PokemonGrid() {
+  const { pokemons, isFetching, isError, error, loadMorePokemons } = useGetPokemons();
   const [isCursorHovered, setIsCursorHovered] = useState(false);
   const { setSelectedPokemon } = usePokemonContext();
   const navigate = useNavigate();
 
-  // Function to update hover state based on PokemonCard interactions
   const handleCursorHoverChange = (isHovered: boolean) => {
     setIsCursorHovered(isHovered);
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>An error has occurred: {error.message}</div>;
+  useEffect(() => {
+    console.log(pokemons);
+  }, [pokemons]);
 
   return (
     <div className="flex flex-col items-center">
@@ -47,6 +42,10 @@ function PokemonGrid(props: PokemonGridProps) {
           </div>
         ))}
       </div>
+      <button onClick={loadMorePokemons} disabled={isFetching} className="load-more-btn">
+        Load More
+      </button>
+      {isError && <p>Error loading pokemons: {error?.message}</p>}
     </div>
   );
 }

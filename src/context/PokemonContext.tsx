@@ -3,6 +3,8 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 interface PokemonContextType {
   selectedPokemon: any;
   setSelectedPokemon: (e: any) => void;
+  pokemons: any[];
+  setPokemons: (e: any) => void;
 }
 
 const PokemonContext = createContext<PokemonContextType | undefined>(undefined);
@@ -21,14 +23,15 @@ interface PokemonProviderProps {
 
 export const PokemonProvider: React.FC<PokemonProviderProps> = ({ children }) => {
   const [selectedPokemon, setSelectedPokemon] = useState<any>("");
+  const [pokemons, setPokemons] = useState<{ name: string; url: string }[]>([]);
 
   console.log("render test");
   useEffect(() => {
-    console.log(selectedPokemon);
-  }, [selectedPokemon]);
+    console.log(pokemons);
+  }, [pokemons]);
 
   return (
-    <PokemonContext.Provider value={{ selectedPokemon, setSelectedPokemon }}>
+    <PokemonContext.Provider value={{ selectedPokemon, setSelectedPokemon, pokemons, setPokemons }}>
       {children}
     </PokemonContext.Provider>
   );

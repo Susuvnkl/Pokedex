@@ -1,13 +1,15 @@
-import React, { useMemo, useState } from "react";
-import { Filter } from "@/hooks/usePokemonList"; // Adjust the import path as needed
+import React, { useEffect, useMemo, useState } from "react";
+import { Filter, usePokemonList } from "@/hooks/usePokemonList";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "./button";
 import Combobox from "./Combobox";
 import { pokemonTypesWithColors } from "@/data/pokemonTypesWithColors";
-// import { pokemonColors } from "@/data/pokemonsColor";
+
 import { pokemonAbilities } from "@/data/pokemonAbilities";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { usePokemonContext } from "@/context/PokemonContext";
+import { useGetPokemons } from "@/hooks/useGetPokemons";
 
 interface FilterPokemonsProps {
   setFilter: (filter: Filter) => void;
@@ -22,25 +24,22 @@ const initialState: Filter = {
 };
 
 function FilterPokemons({ setFilter }: FilterPokemonsProps) {
-  // Temporary state to hold input values before applying them
   const [filterState, setFilterState] = useState<Filter>(initialState);
   const [advancedFilter, setAdvancedFilter] = useState<boolean>(false);
+  const { pokemons } = usePokemonList(filterState);
+  const { reset } = useGetPokemons();
+  const { setPokemons } = usePokemonContext();
 
-  // Process input value to handle numeric and string values accordingly
   function processInputValue(value: string): string {
     if (/^0\d+$/.test(value)) {
-      // If numeric with leading zeros
       return parseInt(value, 10).toString();
     } else if (/^\d+$/.test(value)) {
-      // If purely numeric
       return value;
     } else {
-      // For strings
       return value.toLowerCase().replace(/\s+/g, "-");
     }
   }
 
-  // Handle changes in the input field for name/id
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const processedValue = processInputValue(e.target.value);
     if (/^\d+$/.test(processedValue)) {
@@ -50,24 +49,28 @@ function FilterPokemons({ setFilter }: FilterPokemonsProps) {
     }
   };
 
-  // Handle changes from Combobox components
   const handleComboboxChange = (field: keyof Filter, value: string) => {
     setFilterState((prev) => ({ ...prev, [field]: value }));
+    reset();
   };
 
-  // Apply filters and reset state
   const applyFilters = () => {
-    setFilter(filterState);
+    reset();
     setFilterState(initialState);
   };
 
-  // Generate lists for Combobox components
   const generateComboboxList = (data: { name: string }[]) => {
     return data.map((item) => ({
       value: item.name,
       label: item.name.charAt(0).toUpperCase() + item.name.slice(1),
     }));
   };
+
+  useEffect(() => {
+    if (pokemons) {
+      setPokemons(pokemons);
+    }
+  }, [pokemons, setPokemons]);
 
   const typesList = useMemo(() => generateComboboxList(pokemonTypesWithColors), []);
   // const colorsList = useMemo(() => generateComboboxList(pokemonColors), []);
@@ -83,7 +86,6 @@ function FilterPokemons({ setFilter }: FilterPokemonsProps) {
       <div className="lg:w-3/5 md:w-4/5 p-5  ">
         <img className="w-full" src="/utils/logos/Pokemon.svg" alt="Pokemon Logo" />
       </div>
-      {/* <div className="sm:w-[200px] w-[450px] p-5 bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative "> */}
       <div>
         <div className="flex flex-row	justify-between">
           <Label>

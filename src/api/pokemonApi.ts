@@ -41,16 +41,27 @@ async function fetchResource<T>(
   return fetchFromUrl<T>(url);
 }
 
-export const fetchPokemons = async (): Promise<PokemonDetail[]> => {
-  const queryParams = `limit=${limit}`;
-  const { results } = await fetchResource<{ results: { name: string; url: string }[] }>(
-    "pokemon",
-    "",
-    queryParams
-  );
-
-  return Promise.all(results.map((pokemon) => fetchFromUrl<PokemonDetail>(pokemon.url)));
+export const fetchPokemons = async (): Promise<any[]> => {
+  try {
+    const response = await axios.get(`${BASE_URL}/pokemon?limit=1302`);
+    // Assuming the response data structure matches your provided example:
+    // { count: number, next: string, previous: string, results: Array<{name: string, url: string}> }
+    return response.data.results; // Directly return the list
+  } catch (error) {
+    console.error("Failed to fetch Pokémon list:", error);
+    throw new Error(`Failed to fetch Pokémon list: ${error}`);
+  }
 };
+// export const fetchPokemons = async (): Promise<PokemonDetail[]> => {
+//   const queryParams = `limit=${limit}`;
+//   const { results } = await fetchResource<{ results: { name: string; url: string }[] }>(
+//     "pokemon",
+//     "",
+//     queryParams
+//   );
+
+//   return Promise.all(results.map((pokemon) => fetchFromUrl<PokemonDetail>(pokemon.url)));
+// };
 
 export const fetchPokemonByNameOrId = (query: string | number): Promise<PokemonDetail> => {
   return fetchResource<PokemonDetail>("pokemon", query);
@@ -61,7 +72,8 @@ export const fetchPokemonsByType = async (typeName: string): Promise<PokemonDeta
     "type",
     typeName
   );
-  return Promise.all(pokemon.map((entry) => fetchPokemonByNameOrId(entry.pokemon.name)));
+  return pokemon.map((pokemon) => pokemon.pokemon);
+  // return Promise.all(pokemon.map((entry) => fetchPokemonByNameOrId(entry.pokemon.name)));
 };
 
 // export const fetchPokemonsByGender = async (genderName: string): Promise<PokemonDetail[]> => {

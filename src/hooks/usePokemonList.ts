@@ -8,6 +8,8 @@ import {
   // fetchPokemonsByAbility,
   // fetchPokemonsByColor,
 } from "@/api/pokemonApi";
+import { useEffect } from "react";
+import { usePokemonContext } from "@/context/PokemonContext";
 
 export type Filter = {
   name: string;
@@ -18,8 +20,8 @@ export type Filter = {
   color: string;
 };
 
-// export const usePokemonList = () => {
 export const usePokemonList = (filter: Filter) => {
+  const { setPokemons } = usePokemonContext();
   const fetchFilteredPokemons = async (): Promise<PokemonDetail[]> => {
     if (filter.name || filter.id) {
       return [await fetchPokemonByNameOrId(filter.name || filter.id)];
@@ -39,13 +41,21 @@ export const usePokemonList = (filter: Filter) => {
     // Default fetch if no specific filter is applied
     return await fetchPokemons();
   };
+
   const {
     data: pokemons,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["pokemon", filter],
+    queryKey: ["pokemonsList", filter],
     queryFn: fetchFilteredPokemons,
   });
+
+  useEffect(() => {
+    if (pokemons) {
+      setPokemons(pokemons);
+    }
+  }, [pokemons, setPokemons]);
+
   return { pokemons, isLoading, error };
 };
