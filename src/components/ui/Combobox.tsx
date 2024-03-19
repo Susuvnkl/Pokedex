@@ -32,7 +32,7 @@ function Combobox(props: ComboboxProps) {
 
   const handleChange = (currentValue: string) => {
     setValue(currentValue);
-    onChange(currentValue); // Call the onChange prop function
+    onChange(currentValue);
   };
 
   useEffect(() => {

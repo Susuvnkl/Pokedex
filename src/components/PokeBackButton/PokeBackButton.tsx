@@ -12,7 +12,7 @@ function PokeBackButton(props: PokeBackButtonProps) {
   useEffect(() => {
     const handleClick = () => {
       setClicked(true);
-      setTimeout(() => setClicked(false), 400); // Reset after animation
+      setTimeout(() => setClicked(false), 400);
     };
 
     window.addEventListener("mousedown", handleClick);

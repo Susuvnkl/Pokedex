@@ -18,7 +18,7 @@ function PokedexPage() {
         <FilterPokemons setFilter={setFilter} />
       </div>
       <div>
-        <PokemonGrid filter={filter} />
+        <PokemonGrid />
       </div>
     </div>
   );

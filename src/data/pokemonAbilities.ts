@@ -2,8 +2,6 @@ export type pokemonAbility = {
   name: string;
 };
 
-//https://pokeapi.co/api/v2/ability/{id or name}/
-
 export const pokemonAbilities: pokemonAbility[] = [
   { name: "stench" },
   { name: "drizzle" },

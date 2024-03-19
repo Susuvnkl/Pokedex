@@ -29,29 +29,27 @@ function PokemonType(props: PokemonTypeProps) {
         width: "100%",
         borderRadius: "4px",
         overflow: "hidden",
-        position: "relative", // Needed for absolute positioning of the overlay
+        position: "relative",
         WebkitFilter: "drop-shadow(0 0 3px rgba(255, 255, 255, 1))",
         filter: "drop-shadow(0 0 3px rgba(255, 255, 255, 1))",
       }}
     >
       {typesWithColors.length === 2 ? (
         <>
-          {/* Left container, make it a bit larger than half the width */}
           <div
             style={{
-              flex: "0 0 45%", // Using flex-grow, flex-shrink, and flex-basis
+              flex: "0 0 45%",
               backgroundColor: typesWithColors[0].color,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               color: "white",
-              zIndex: 1, // Ensure this div is above the overlay
+              zIndex: 1,
             }}
           >
             <span style={{ paddingLeft: "2px" }}>{typesWithColors[0].typeName}</span>
           </div>
 
-          {/* Right container */}
           <div
             style={{
               flex: "1",
@@ -60,23 +58,22 @@ function PokemonType(props: PokemonTypeProps) {
               alignItems: "center",
               justifyContent: "center",
               color: "white",
-              position: "relative", // To contain the overlay
+              position: "relative",
             }}
           >
             <span>{typesWithColors[1].typeName}</span>
 
-            {/* Overlay: Skewed div that covers part of the left container */}
             <div
               style={{
                 position: "absolute",
                 top: 0,
                 bottom: 0,
-                left: "-10%", // Start a bit to the left of the container's edge
-                right: "90%", // End at the halfway point of the container
+                left: "-10%",
+                right: "90%",
                 backgroundColor: typesWithColors[0].color,
                 transform: "skewX(-10deg)",
                 transformOrigin: "top left",
-                zIndex: 0, // Ensure this is below the text
+                zIndex: 0,
               }}
             />
           </div>

@@ -7,29 +7,14 @@
   --light_red: #ff696a;
   --red: #fe0000;
   --dark_red: #b40000;
-  --ball-size: 5px; /* Initial size of the ball */
+  --ball-size: 5px;
 }
-/* 
-  The css for the pokeball sprites is quite long, but fairly simple.
-  And the bouncing animation is cute, but again pretty straight-forward with
-  some well-timed squash/stretch.
-
-  But I am quite excited and proud of the throw/exit animations on the pokemon
-  sprites. There's a few really cool techniques I dreamt up like using a color-dodge
-  blend on the sprite over the top of a heavily blurred, hue-rotated and brightened
-  animation of the pokemon sprite.
-
-*/
-
-/* pokeballs code */
 
 :root {
   --cell: 41px;
   --celly: 40px;
   --ecell: 240px;
   --offset-poke: var(--cell) * 0;
-  /* --slowmo: 5s; */
-  /* --slowsplode: 2s; */
 }
 
 .ball {

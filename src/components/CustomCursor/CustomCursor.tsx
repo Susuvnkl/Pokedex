@@ -9,7 +9,7 @@ interface Position {
 interface CustomCursorProps {
   visible: boolean;
   style?: React.CSSProperties;
-  hovered: boolean; // Add this prop
+  hovered: boolean;
 }
 
 const CustomCursor = (props: CustomCursorProps) => {
@@ -24,7 +24,7 @@ const CustomCursor = (props: CustomCursorProps) => {
 
     const handleClick = () => {
       setClicked(true);
-      setTimeout(() => setClicked(false), 400); // Reset after animation
+      setTimeout(() => setClicked(false), 400);
     };
 
     window.addEventListener("mousemove", updatePosition);
@@ -46,10 +46,10 @@ const CustomCursor = (props: CustomCursorProps) => {
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
-        ...style, // Apply additional styles passed via props
-        position: "fixed", // Ensure the custom cursor is positioned relative to the viewport
-        pointerEvents: "none", // Prevent the cursor from interfering with other elements
-        zIndex: 9999, // Ensure the cursor is above most other elements
+        ...style,
+        position: "fixed",
+        pointerEvents: "none",
+        zIndex: 9999,
       }}
     />
   );
