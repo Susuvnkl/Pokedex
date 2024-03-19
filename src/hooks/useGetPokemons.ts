@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { usePokemonContext } from "@/context/PokemonContext";
 
@@ -7,7 +7,7 @@ const limit = 20;
 
 export const useGetPokemons = () => {
   const { pokemons: allPokemons } = usePokemonContext();
-  const [loadedPokemons, setLoadedPokemons] = useState([]);
+  const [loadedPokemons, setLoadedPokemons] = useState<any>([]);
   const [page, setPage] = useState<number>(0);
 
   const fetchPokemons = async ({ pageParam = 1 }) => {
@@ -48,11 +48,10 @@ export const useGetPokemons = () => {
 
   useEffect(() => {
     console.log("testData", data);
-    if (data && data === []) setPage(1);
     if (page === 1) {
       setLoadedPokemons(data);
     } else {
-      data && setLoadedPokemons((prev) => [...prev, ...data]);
+      data && setLoadedPokemons((prev: any) => [...prev, ...data]);
     }
     console.log(data);
     console.log(loadedPokemons);

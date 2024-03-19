@@ -23,7 +23,7 @@ function PokemonGrid() {
     <div className="flex flex-col items-center">
       <CustomCursor visible={true} hovered={isCursorHovered} />
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-5 gap-x-8 justify-items-center">
-        {pokemons?.map((pokemon) => (
+        {pokemons?.map((pokemon: any) => (
           <div
             key={pokemon.id}
             onClick={() => {

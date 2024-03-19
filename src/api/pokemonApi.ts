@@ -20,8 +20,6 @@ export type genderDetail = {
   rate: number;
 };
 
-const limit: number = 20;
-
 async function fetchFromUrl<T>(url: string): Promise<T> {
   try {
     const response = await axios.get<T>(url);
@@ -67,7 +65,7 @@ export const fetchPokemonByNameOrId = (query: string | number): Promise<PokemonD
   return fetchResource<PokemonDetail>("pokemon", query);
 };
 
-export const fetchPokemonsByType = async (typeName: string): Promise<PokemonDetail[]> => {
+export const fetchPokemonsByType = async (typeName: string): Promise<any[]> => {
   const { pokemon } = await fetchResource<{ pokemon: { pokemon: { name: string } }[] }>(
     "type",
     typeName

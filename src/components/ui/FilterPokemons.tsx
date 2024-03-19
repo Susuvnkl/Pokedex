@@ -4,16 +4,12 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "./button";
 import Combobox from "./Combobox";
 import { pokemonTypesWithColors } from "@/data/pokemonTypesWithColors";
-
 import { pokemonAbilities } from "@/data/pokemonAbilities";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { usePokemonContext } from "@/context/PokemonContext";
 import { useGetPokemons } from "@/hooks/useGetPokemons";
 
-interface FilterPokemonsProps {
-  setFilter: (filter: Filter) => void;
-}
 const initialState: Filter = {
   name: "",
   id: "",
@@ -23,7 +19,7 @@ const initialState: Filter = {
   ability: "",
 };
 
-function FilterPokemons({ setFilter }: FilterPokemonsProps) {
+function FilterPokemons() {
   const [filterState, setFilterState] = useState<Filter>(initialState);
   const [advancedFilter, setAdvancedFilter] = useState<boolean>(false);
   const { pokemons } = usePokemonList(filterState);
