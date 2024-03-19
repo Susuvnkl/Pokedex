@@ -2,9 +2,9 @@ import React, { useMemo, useState } from "react";
 import { Filter } from "@/hooks/usePokemonList"; // Adjust the import path as needed
 import { Switch } from "@/components/ui/switch";
 import { Button } from "./button";
-import Combobox, { ComboboxOption } from "./Combobox";
+import Combobox from "./Combobox";
 import { pokemonTypesWithColors } from "@/data/pokemonTypesWithColors";
-import { pokemonColors } from "@/data/pokemonsColor";
+// import { pokemonColors } from "@/data/pokemonsColor";
 import { pokemonAbilities } from "@/data/pokemonAbilities";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
