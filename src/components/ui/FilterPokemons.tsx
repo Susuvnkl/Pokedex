@@ -70,13 +70,13 @@ function FilterPokemons({ setFilter }: FilterPokemonsProps) {
   };
 
   const typesList = useMemo(() => generateComboboxList(pokemonTypesWithColors), []);
-  const colorsList = useMemo(() => generateComboboxList(pokemonColors), []);
+  // const colorsList = useMemo(() => generateComboboxList(pokemonColors), []);
   const abilityList = useMemo(() => generateComboboxList(pokemonAbilities), []);
 
-  const genderList: ComboboxOption[] = [
-    { value: "female", label: "Female" },
-    { value: "male", label: "Male" },
-  ];
+  // const genderList: ComboboxOption[] = [
+  //   { value: "female", label: "Female" },
+  //   { value: "male", label: "Male" },
+  // ];
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
