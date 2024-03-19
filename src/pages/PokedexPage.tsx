@@ -20,7 +20,6 @@ function PokedexPage() {
       <div>
         <PokemonGrid filter={filter} />
       </div>
-      <div>Scroll</div>
     </div>
   );
 }

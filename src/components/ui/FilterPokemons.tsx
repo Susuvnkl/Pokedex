@@ -83,6 +83,7 @@ function FilterPokemons({ setFilter }: FilterPokemonsProps) {
       <div className="lg:w-3/5 md:w-4/5 p-5  ">
         <img className="w-full" src="/utils/logos/Pokemon.svg" alt="Pokemon Logo" />
       </div>
+      {/* <div className="sm:w-[200px] w-[450px] p-5 bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative "> */}
       <div>
         <div className="flex flex-row	justify-between">
           <Label>
@@ -93,7 +94,7 @@ function FilterPokemons({ setFilter }: FilterPokemonsProps) {
             onCheckedChange={() => setAdvancedFilter(!advancedFilter)}
           />
         </div>
-        <div className="flex flex-row">
+        <div className="flex flex-row px-3">
           <Input
             id="pokemonQueryFilter"
             type="text"
@@ -109,7 +110,7 @@ function FilterPokemons({ setFilter }: FilterPokemonsProps) {
           </Button>
         </div>
         {advancedFilter && (
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5 justify-items-center p-3">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5 justify-items-center p-3">
             {/* <Combobox
               onChange={(value) => handleComboboxChange("gender", value)}
               options={genderList}

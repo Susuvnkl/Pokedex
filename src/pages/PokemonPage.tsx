@@ -131,7 +131,7 @@ function PokemonPage() {
           {frontSprites.map((sprite, index) => (
             <div
               key={index}
-              className="bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative max-w-[280px] flex flex-col items-center"
+              className="mb-3 bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative max-w-[280px] flex flex-col items-center"
             >
               <img src={sprite.url} alt={`${selectedPokemon.name} ${sprite.name}`} />
               <p className="text-center mb-2">{sprite.name}</p>
