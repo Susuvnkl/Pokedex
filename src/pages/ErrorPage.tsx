@@ -1,7 +1,11 @@
 import { useRouteError } from "react-router-dom";
 
+interface ErrorWithMessage extends Error {
+  statusText?: string;
+}
+
 export default function ErrorPage() {
-  const error = useRouteError();
+  const error = useRouteError() as ErrorWithMessage;
   console.error(error);
 
   return (
