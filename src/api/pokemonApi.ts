@@ -64,7 +64,6 @@ export const fetchPokemonsByType = async (typeName: string): Promise<PokemonDeta
   return Promise.all(pokemon.map((entry) => fetchPokemonByNameOrId(entry.pokemon.name)));
 };
 
-// Example for fetching based on gender, assuming API supports it directly
 // export const fetchPokemonsByGender = async (genderName: string): Promise<PokemonDetail[]> => {
 //   const pokemons = await fetchResource<genderDetail[]>("gender", genderName);
 //   console.log("test", pokemons.pokemon_species_details);
@@ -86,6 +85,7 @@ export const fetchPokemonsByType = async (typeName: string): Promise<PokemonDeta
 // };
 
 // Fetch Pokémons by ability
+
 export const fetchPokemonsByAbility = async (abilityName: string): Promise<PokemonDetail[]> => {
   const { pokemon } = await fetchResource<{ pokemon: { pokemon: { name: string } }[] }>(
     "ability",
@@ -94,7 +94,6 @@ export const fetchPokemonsByAbility = async (abilityName: string): Promise<Pokem
   return Promise.all(pokemon.map((entry) => fetchPokemonByNameOrId(entry.pokemon.name)));
 };
 
-// Assuming fetchEvolutionChainById follows a similar pattern
 export const fetchEvolutionChainById = (id: string | number): Promise<any> => {
   return fetchResource("pokemon-species", id, "evolution_chain");
 };
