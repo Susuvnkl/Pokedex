@@ -110,12 +110,12 @@ function FilterPokemons({ setFilter }: FilterPokemonsProps) {
         </div>
         {advancedFilter && (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-5 justify-items-center p-3">
-            <Combobox
+            {/* <Combobox
               onChange={(value) => handleComboboxChange("gender", value)}
               options={genderList}
               selectedValue={filterState.gender}
               label="Gender"
-            />
+            /> */}
             <Combobox
               onChange={(value) => handleComboboxChange("type", value)}
               options={typesList}
@@ -128,12 +128,12 @@ function FilterPokemons({ setFilter }: FilterPokemonsProps) {
               selectedValue={filterState.ability}
               label="Ability"
             />
-            <Combobox
+            {/* <Combobox
               onChange={(value) => handleComboboxChange("color", value)}
               options={colorsList}
               selectedValue={filterState.color}
               label="Color"
-            />
+            /> */}
           </div>
         )}
       </div>
