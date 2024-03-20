@@ -15,11 +15,9 @@ function PokemonCard(props: PokemonCardProps) {
   const { pokemonId, pokemonName, pokemonSpritesFrontDefault, pokemonTypes, onHoverChange } = props;
   const [isImageLoading, setIsImageLoading] = useState(true);
 
-  function capitalizeFirstLetter(string: string) {
-    return string
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
+  function formatPokemonName(name: string) {
+    const firstPart = name.split("-")[0];
+    return firstPart.charAt(0).toUpperCase() + firstPart.slice(1);
   }
 
   const onImageLoad = () => {
@@ -36,7 +34,6 @@ function PokemonCard(props: PokemonCardProps) {
     >
       {/* Upper Section */}
       <div className="upper-section flex flex-col justify-center items-center p-5 ">
-        {isImageLoading && <Skeleton />}
         <div className="image-container bg-white bg-opacity-40 inline-block rounded-full overflow-hidden shadow-neon-light dark:bg-black dark:bg-opacity-40 dark:shadow-neon-dark p-2">
           <img
             src={pokemonSpritesFrontDefault}
@@ -66,7 +63,7 @@ function PokemonCard(props: PokemonCardProps) {
             filter: "drop-shadow(0 0 1px rgba(255, 255, 255, 0.5))",
           }}
         >
-          {capitalizeFirstLetter(pokemonName)}
+          {formatPokemonName(pokemonName)}
         </h2>
         {pokemonTypes && (
           <div className="flex justify-center space-x-2 mt-2">

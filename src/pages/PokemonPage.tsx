@@ -1,7 +1,9 @@
 import CustomCarousel from "@/components/Carousel/CustomCarousel";
 import PokeBackButton from "@/components/PokeBackButton/PokeBackButton";
 import PokemonType from "@/components/ui/PokemonType";
+import { Skeleton } from "@/components/ui/skeleton";
 import { usePokemonContext } from "@/context/PokemonContext";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface Sprites {
@@ -11,8 +13,11 @@ interface Sprites {
 function PokemonPage() {
   const navigate = useNavigate();
   const { selectedPokemon } = usePokemonContext();
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
-  console.log(selectedPokemon);
+  const onImageLoad = () => {
+    setIsImageLoading(false);
+  };
 
   function extractFrontSprites(sprites: Sprites): Array<{ url: string; name: string }> {
     const frontSprites: Array<{ url: string; name: string }> = [];
@@ -27,6 +32,11 @@ function PokemonPage() {
     });
 
     return frontSprites;
+  }
+
+  function formatPokemonName(name: string) {
+    const firstPart = name.split("-")[0];
+    return firstPart.charAt(0).toUpperCase() + firstPart.slice(1);
   }
 
   const frontSprites = extractFrontSprites(selectedPokemon.sprites);
@@ -51,7 +61,7 @@ function PokemonPage() {
             filter: "drop-shadow(0 0 1px rgba(255, 255, 255, 0.5))",
           }}
         >
-          {selectedPokemon.name.charAt(0).toUpperCase() + selectedPokemon.name.slice(1)}
+          {formatPokemonName(selectedPokemon.name)}
         </h2>
         <div className="image-container bg-white bg-opacity-40 inline-block rounded-full overflow-hidden shadow-neon-light dark:bg-black dark:bg-opacity-40 dark:shadow-neon-dark p-2">
           <img
@@ -61,8 +71,11 @@ function PokemonPage() {
             style={{
               WebkitFilter: "drop-shadow(0 0 3px rgba(255, 255, 255, 1))",
               filter: "drop-shadow(0 0 3px rgba(255, 255, 255, 1))",
+              display: isImageLoading ? "none" : "",
             }}
+            onLoad={onImageLoad}
           />
+          {isImageLoading && <Skeleton className="rounded-full w-[80px] h-[80px]" />}
         </div>
       </div>
       <div className="bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative max-w-[240px]">
@@ -90,12 +103,15 @@ function PokemonPage() {
       <div className="mb-3 bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light  relative max-w-[240px] p-3">
         <CustomCarousel>
           {frontSprites.map((sprite, index) => (
-            // <div
-            //   key={index}
-            //   className="mb-3 bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative max-w-[280px] flex flex-col items-center"
-            // >
             <div className=" flex flex-col items-center justify-center" key={index}>
-              <img src={sprite.url} alt={`${selectedPokemon.name} ${sprite.name}`} />
+              <img
+                onLoad={onImageLoad}
+                src={sprite.url}
+                alt={`${selectedPokemon.name} ${sprite.name}`}
+                style={{ display: isImageLoading ? "none" : "" }}
+              />
+              {isImageLoading && <Skeleton className="rounded-full w-[80px] h-[80px]" />}
+
               <p className="text-center mb-2">{sprite.name}</p>
             </div>
           ))}
