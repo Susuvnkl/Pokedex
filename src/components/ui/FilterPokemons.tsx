@@ -27,7 +27,7 @@ function FilterPokemons() {
   });
   const [advancedFilter, setAdvancedFilter] = useState<boolean>(false);
   const { pokemons } = usePokemonList(filterState);
-  const { setPokemons } = usePokemonContext();
+  const { setPokemons, discoverPokemons } = usePokemonContext();
 
   function processInputValue(value: string): string {
     if (/^0\d+$/.test(value)) {
@@ -141,7 +141,7 @@ function FilterPokemons() {
           <Button className="ml-2 p-3" onClick={applyFilters}>
             🔍
           </Button>
-          <Button disabled className="ml-5" onClick={applyFilters}>
+          <Button className="ml-5" onClick={discoverPokemons}>
             Discover
           </Button>
         </div>
