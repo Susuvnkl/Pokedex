@@ -1,12 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import {
-  PokemonDetail,
   fetchPokemonByNameOrId,
   fetchPokemons,
   fetchPokemonsByType,
-  // fetchPokemonsByGender,
-  // fetchPokemonsByAbility,
-  // fetchPokemonsByColor,
+  fetchPokemonsByGender,
+  fetchPokemonsByAbility,
+  fetchPokemonsByColor,
 } from "@/api/pokemonApi";
 import { useEffect } from "react";
 import { usePokemonContext } from "@/context/PokemonContext";
@@ -22,23 +21,22 @@ export type Filter = {
 
 export const usePokemonList = (filter: Filter) => {
   const { setPokemons } = usePokemonContext();
-  const fetchFilteredPokemons = async (): Promise<PokemonDetail[]> => {
+  const fetchFilteredPokemons = async (): Promise<{ name: string; url: string }[]> => {
     if (filter.name || filter.id) {
-      return [await fetchPokemonByNameOrId(filter.name || filter.id)];
+      return await fetchPokemonByNameOrId(filter.name || filter.id);
     }
     if (filter.type) {
       return await fetchPokemonsByType(filter.type);
     }
-    // if (filter.gender) {
-    //   return await fetchPokemonsByGender(filter.gender);
-    // }
-    // if (filter.ability) {
-    //   return await fetchPokemonsByAbility(filter.ability);
-    // }
-    // if (filter.color) {
-    //   return await fetchPokemonsByColor(filter.color);
-    // }
-    // Default fetch if no specific filter is applied
+    if (filter.gender) {
+      return await fetchPokemonsByGender(filter.gender);
+    }
+    if (filter.ability) {
+      return await fetchPokemonsByAbility(filter.ability);
+    }
+    if (filter.color) {
+      return await fetchPokemonsByColor(filter.color);
+    }
     return await fetchPokemons();
   };
 

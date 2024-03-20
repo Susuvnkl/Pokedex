@@ -8,7 +8,6 @@ import { pokemonAbilities } from "@/data/pokemonAbilities";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { usePokemonContext } from "@/context/PokemonContext";
-import { useGetPokemons } from "@/hooks/useGetPokemons";
 import { pokemonColors } from "@/data/pokemonsColor";
 
 const initialState: Filter = {
@@ -22,9 +21,12 @@ const initialState: Filter = {
 
 function FilterPokemons() {
   const [filterState, setFilterState] = useState<Filter>(initialState);
+  const [inputValues, setInputValues] = useState<{ name: string; id: string }>({
+    name: "",
+    id: "",
+  });
   const [advancedFilter, setAdvancedFilter] = useState<boolean>(false);
   const { pokemons } = usePokemonList(filterState);
-  const { reset } = useGetPokemons();
   const { setPokemons } = usePokemonContext();
 
   function processInputValue(value: string): string {
@@ -40,20 +42,20 @@ function FilterPokemons() {
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const processedValue = processInputValue(e.target.value);
     if (/^\d+$/.test(processedValue)) {
-      setFilterState((prev) => ({ ...prev, id: processedValue, name: "" }));
+      setInputValues({ id: processedValue, name: "" });
     } else {
-      setFilterState((prev) => ({ ...prev, name: processedValue, id: "" }));
+      setInputValues({ name: processedValue, id: "" });
     }
   };
 
   const handleComboboxChange = (field: keyof Filter, value: string) => {
-    setFilterState((prev) => ({ ...prev, [field]: value }));
-    reset();
+    setFilterState({ ...initialState, [field]: value });
   };
 
   const applyFilters = () => {
-    reset();
-    setFilterState(initialState);
+    if (inputValues.id === "" && inputValues.name === "") {
+      setFilterState(initialState);
+    } else setFilterState({ ...initialState, ...inputValues });
   };
 
   const generateComboboxList = (data: { name: string }[]) => {
@@ -93,12 +95,6 @@ function FilterPokemons() {
       {advancedFilter ? (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5 justify-items-center pb-3">
           <Combobox
-            onChange={(value) => handleComboboxChange("gender", value)}
-            options={genderList}
-            selectedValue={filterState.gender}
-            label="Gender"
-          />
-          <Combobox
             onChange={(value) => handleComboboxChange("type", value)}
             options={typesList}
             selectedValue={filterState.type}
@@ -116,6 +112,12 @@ function FilterPokemons() {
             selectedValue={filterState.color}
             label="Color"
           />
+          <Combobox
+            onChange={(value) => handleComboboxChange("gender", value)}
+            options={genderList}
+            selectedValue={filterState.gender}
+            label="Gender"
+          />
         </div>
       ) : (
         <div className="justify-items-center pb-3">
@@ -132,14 +134,14 @@ function FilterPokemons() {
           <Input
             id="pokemonQueryFilter"
             type="text"
-            value={filterState.name || filterState.id}
+            value={inputValues.name || inputValues.id}
             onChange={handleQueryChange}
             placeholder="Type to filter..."
           ></Input>
           <Button className="ml-2 p-3" onClick={applyFilters}>
             🔍
           </Button>
-          <Button className="ml-5" onClick={applyFilters}>
+          <Button disabled className="ml-5" onClick={applyFilters}>
             Discover
           </Button>
         </div>

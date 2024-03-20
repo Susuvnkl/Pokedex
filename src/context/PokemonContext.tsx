@@ -3,8 +3,11 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 interface PokemonContextType {
   selectedPokemon: any;
   setSelectedPokemon: (e: any) => void;
-  pokemons: any[];
-  setPokemons: (e: any) => void;
+  pokemons: Pokemon[];
+  setPokemons: (e: Pokemon[]) => void;
+  paginatedPokemons: Pokemon[];
+  loadMore: () => void;
+  noMorePokemons: boolean;
 }
 
 const PokemonContext = createContext<PokemonContextType | undefined>(undefined);
@@ -21,17 +24,56 @@ interface PokemonProviderProps {
   children: ReactNode;
 }
 
-export const PokemonProvider: React.FC<PokemonProviderProps> = ({ children }) => {
-  const [selectedPokemon, setSelectedPokemon] = useState<any>("");
-  const [pokemons, setPokemons] = useState<{ name: string; url: string }[]>([]);
+const rateLimit = 20;
 
-  console.log("render test");
+interface Pokemon {
+  name: string;
+  url: string;
+}
+
+export const PokemonProvider: React.FC<PokemonProviderProps> = ({ children }) => {
+  const [selectedPokemon, setSelectedPokemon] = useState<any>(null);
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [paginatedPokemons, setPaginatedPokemons] = useState<Pokemon[]>([]);
+  const [noMorePokemons, setNoMorePokemons] = useState<boolean>(false);
+
   useEffect(() => {
-    console.log(pokemons);
+    const initialLoad = () => {
+      const initialPokemons = pokemons.slice(0, rateLimit);
+      setPaginatedPokemons(initialPokemons);
+      if (initialPokemons.length < rateLimit) {
+        setNoMorePokemons(true);
+      } else {
+        setNoMorePokemons(false);
+      }
+    };
+    initialLoad();
   }, [pokemons]);
 
+  const loadMore = () => {
+    const nextPokemons = pokemons.slice(
+      paginatedPokemons.length,
+      paginatedPokemons.length + rateLimit
+    );
+    if (nextPokemons.length > 0) {
+      setPaginatedPokemons(paginatedPokemons.concat(nextPokemons));
+    } else {
+      setNoMorePokemons(true);
+    }
+  };
+
   return (
-    <PokemonContext.Provider value={{ selectedPokemon, setSelectedPokemon, pokemons, setPokemons }}>
+    <PokemonContext.Provider
+      value={{
+        selectedPokemon,
+        setSelectedPokemon,
+        pokemons,
+        setPokemons,
+        paginatedPokemons,
+        loadMore,
+        noMorePokemons,
+      }}
+    >
       {children}
     </PokemonContext.Provider>
   );

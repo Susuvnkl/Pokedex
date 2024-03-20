@@ -42,27 +42,22 @@ async function fetchResource<T>(
 export const fetchPokemons = async (): Promise<any[]> => {
   try {
     const response = await axios.get(`${BASE_URL}/pokemon?limit=1302`);
-    // Assuming the response data structure matches your provided example:
-    // { count: number, next: string, previous: string, results: Array<{name: string, url: string}> }
-    return response.data.results; // Directly return the list
+
+    return response.data.results;
   } catch (error) {
     console.error("Failed to fetch Pokémon list:", error);
     throw new Error(`Failed to fetch Pokémon list: ${error}`);
   }
 };
-// export const fetchPokemons = async (): Promise<PokemonDetail[]> => {
-//   const queryParams = `limit=${limit}`;
-//   const { results } = await fetchResource<{ results: { name: string; url: string }[] }>(
-//     "pokemon",
-//     "",
-//     queryParams
-//   );
 
-//   return Promise.all(results.map((pokemon) => fetchFromUrl<PokemonDetail>(pokemon.url)));
-// };
+export type PokeonItemResponse = {
+  name: string;
+  url: string;
+};
 
-export const fetchPokemonByNameOrId = (query: string | number): Promise<PokemonDetail> => {
-  return fetchResource<PokemonDetail>("pokemon", query);
+export const fetchPokemonByNameOrId = (query: string): PokeonItemResponse[] => {
+  const returnedObj = [{ name: query, url: `${BASE_URL}/pokemon/${query}` }];
+  return returnedObj;
 };
 
 export const fetchPokemonsByType = async (typeName: string): Promise<any[]> => {
@@ -71,37 +66,36 @@ export const fetchPokemonsByType = async (typeName: string): Promise<any[]> => {
     typeName
   );
   return pokemon.map((pokemon) => pokemon.pokemon);
-  // return Promise.all(pokemon.map((entry) => fetchPokemonByNameOrId(entry.pokemon.name)));
 };
 
-// export const fetchPokemonsByGender = async (genderName: string): Promise<PokemonDetail[]> => {
-//   const pokemons = await fetchResource<genderDetail[]>("gender", genderName);
-//   console.log("test", pokemons.pokemon_species_details);
-//   return Promise.all(
-//     pokemons.pokemon_species_details.map((entry: genderDetail) =>
-//       fetchPokemonByNameOrId(entry.pokemon_species.name)
-//     )
-//   );
-// };
+export const fetchPokemonsByGender = async (genderName: string): Promise<any[]> => {
+  const pokemons = await fetchResource<any>("gender", genderName);
+  return pokemons.pokemon_species_details.map((pokemon: any) => {
+    const returnedObj = {
+      name: pokemon.pokemon_species.name,
+      url: `${BASE_URL}/pokemon/${pokemon.pokemon_species.name}`,
+    };
+    return returnedObj;
+  });
+};
 
-// Fetch Pokémons by color
-// export const fetchPokemonsByColor = async (colorName: string): Promise<PokemonDetail[]> => {
-//   const pokemon = await fetchResource<{ pokemon: { pokemon: { name: string } }[] }>(
-//     "pokemon-color",
-//     colorName
-//   );
-//   console.log(pokemon);
-//   return Promise.all(pokemon.pokemon_species.map((entry) => fetchPokemonByNameOrId(entry.name)));
-// };
+export const fetchPokemonsByColor = async (colorName: string): Promise<any[]> => {
+  const { pokemon_species } = await fetchResource<any>("pokemon-color", colorName);
+  return pokemon_species.map((pokemon: any) => {
+    const returnedObj = {
+      name: pokemon.name,
+      url: `${BASE_URL}/pokemon/${pokemon.name}`,
+    };
+    return returnedObj;
+  });
+};
 
-// Fetch Pokémons by ability
-
-export const fetchPokemonsByAbility = async (abilityName: string): Promise<PokemonDetail[]> => {
+export const fetchPokemonsByAbility = async (abilityName: string): Promise<any[]> => {
   const { pokemon } = await fetchResource<{ pokemon: { pokemon: { name: string } }[] }>(
     "ability",
     abilityName
   );
-  return Promise.all(pokemon.map((entry) => fetchPokemonByNameOrId(entry.pokemon.name)));
+  return pokemon.map((pokemon) => pokemon.pokemon);
 };
 
 export const fetchEvolutionChainById = (id: string | number): Promise<any> => {
