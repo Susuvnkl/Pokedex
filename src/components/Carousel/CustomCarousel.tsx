@@ -14,9 +14,9 @@ interface CustomCarouselProps {
 function CustomCarousel({ children }: CustomCarouselProps) {
   return (
     <Carousel className="w-full max-w-sm">
-      <CarouselContent className="-ml-1">
+      <CarouselContent>
         {React.Children.map(children, (child, index) => (
-          <CarouselItem key={index} className="pl-1 ">
+          <CarouselItem key={index} className="flex  items-center justify-center">
             {child}
           </CarouselItem>
         ))}

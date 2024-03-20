@@ -2,13 +2,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Filter, usePokemonList } from "@/hooks/usePokemonList";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "./button";
-import Combobox from "./Combobox";
+import Combobox, { ComboboxOption } from "./Combobox";
 import { pokemonTypesWithColors } from "@/data/pokemonTypesWithColors";
 import { pokemonAbilities } from "@/data/pokemonAbilities";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { usePokemonContext } from "@/context/PokemonContext";
 import { useGetPokemons } from "@/hooks/useGetPokemons";
+import { pokemonColors } from "@/data/pokemonsColor";
 
 const initialState: Filter = {
   name: "",
@@ -69,30 +70,65 @@ function FilterPokemons() {
   }, [pokemons, setPokemons]);
 
   const typesList = useMemo(() => generateComboboxList(pokemonTypesWithColors), []);
-  // const colorsList = useMemo(() => generateComboboxList(pokemonColors), []);
+  const colorsList = useMemo(() => generateComboboxList(pokemonColors), []);
   const abilityList = useMemo(() => generateComboboxList(pokemonAbilities), []);
 
-  // const genderList: ComboboxOption[] = [
-  //   { value: "female", label: "Female" },
-  //   { value: "male", label: "Male" },
-  // ];
+  const genderList: ComboboxOption[] = [
+    { value: "female", label: "Female" },
+    { value: "male", label: "Male" },
+  ];
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
       <div className="lg:w-3/5 md:w-4/5 p-5  ">
         <img className="w-full" src="/utils/logos/Pokemon.svg" alt="Pokemon Logo" />
       </div>
-      <div>
-        <div className="flex flex-row	justify-between">
-          <Label>
-            {advancedFilter ? "Advanced: Filter by Name or ID" : "Basic: Filter by Name or ID"}
-          </Label>
-          <Switch
-            checked={advancedFilter}
-            onCheckedChange={() => setAdvancedFilter(!advancedFilter)}
+      <div className="flex flex-row	justify-center align-center pb-3">
+        <Label className="pt-1 pr-1 stroke-black stroke-2">Advanced Filter </Label>
+        <Switch
+          checked={advancedFilter}
+          onCheckedChange={() => setAdvancedFilter(!advancedFilter)}
+        />
+      </div>
+      {advancedFilter ? (
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5 justify-items-center pb-3">
+          <Combobox
+            onChange={(value) => handleComboboxChange("gender", value)}
+            options={genderList}
+            selectedValue={filterState.gender}
+            label="Gender"
+          />
+          <Combobox
+            onChange={(value) => handleComboboxChange("type", value)}
+            options={typesList}
+            selectedValue={filterState.type}
+            label="Type"
+          />
+          <Combobox
+            onChange={(value) => handleComboboxChange("ability", value)}
+            options={abilityList}
+            selectedValue={filterState.ability}
+            label="Ability"
+          />
+          <Combobox
+            onChange={(value) => handleComboboxChange("color", value)}
+            options={colorsList}
+            selectedValue={filterState.color}
+            label="Color"
           />
         </div>
-        <div className="flex flex-row px-3">
+      ) : (
+        <div className="justify-items-center pb-3">
+          <Combobox
+            onChange={(value) => handleComboboxChange("type", value)}
+            options={typesList}
+            selectedValue={filterState.type}
+            label="Type"
+          />
+        </div>
+      )}
+      <div>
+        <div className="flex flex-row pb-5">
           <Input
             id="pokemonQueryFilter"
             type="text"
@@ -107,34 +143,6 @@ function FilterPokemons() {
             Discover
           </Button>
         </div>
-        {advancedFilter && (
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-5 justify-items-center p-3">
-            {/* <Combobox
-              onChange={(value) => handleComboboxChange("gender", value)}
-              options={genderList}
-              selectedValue={filterState.gender}
-              label="Gender"
-            /> */}
-            <Combobox
-              onChange={(value) => handleComboboxChange("type", value)}
-              options={typesList}
-              selectedValue={filterState.type}
-              label="Type"
-            />
-            <Combobox
-              onChange={(value) => handleComboboxChange("ability", value)}
-              options={abilityList}
-              selectedValue={filterState.ability}
-              label="Ability"
-            />
-            {/* <Combobox
-              onChange={(value) => handleComboboxChange("color", value)}
-              options={colorsList}
-              selectedValue={filterState.color}
-              label="Color"
-            /> */}
-          </div>
-        )}
       </div>
     </div>
   );

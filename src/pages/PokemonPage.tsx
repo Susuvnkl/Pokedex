@@ -34,7 +34,6 @@ function PokemonPage() {
   return (
     <div className="flex flex-col">
       <PokeBackButton onAction={() => navigate(-1)} />
-
       <div className="upper-section flex flex-col justify-center items-center p-5 mt-5">
         <h2
           className="text-5xl  text-gray-900 dark:text-white text-start mb-5"
@@ -66,7 +65,7 @@ function PokemonPage() {
           />
         </div>
       </div>
-      <div className="bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative max-w-[280px]">
+      <div className="bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative max-w-[240px]">
         <div className="lower-section shadow-neon-light bg-white bg-opacity-35 dark:shadow-neon-dark border-neon-light dark:bg-opacity-5 dark:border-neon-dark p-3 pt-1 rounded-bl-lg rounded-br-lg">
           <div className="flex flex-row justify-center">
             <p className="text-m">Type:</p>
@@ -76,8 +75,7 @@ function PokemonPage() {
           </div>
         </div>
       </div>
-
-      <div className="bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative max-w-[280px]">
+      <div className="bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative max-w-[240px]">
         <div className="flex flex-row justify-between p-3 ">
           <div className="flex flex-row">
             <p className="text-m font-bold">Height:</p>
@@ -89,13 +87,14 @@ function PokemonPage() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center ">
+      <div className="mb-3 bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light  relative max-w-[240px] p-3">
         <CustomCarousel>
           {frontSprites.map((sprite, index) => (
-            <div
-              key={index}
-              className="mb-3 bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative max-w-[280px] flex flex-col items-center"
-            >
+            // <div
+            //   key={index}
+            //   className="mb-3 bg-white bg-opacity-50 m-2 w-4/5 mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative max-w-[280px] flex flex-col items-center"
+            // >
+            <div className=" flex flex-col items-center justify-center" key={index}>
               <img src={sprite.url} alt={`${selectedPokemon.name} ${sprite.name}`} />
               <p className="text-center mb-2">{sprite.name}</p>
             </div>
