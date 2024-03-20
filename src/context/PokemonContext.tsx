@@ -41,7 +41,6 @@ export const PokemonProvider: React.FC<PokemonProviderProps> = ({ children }) =>
   const [noMorePokemons, setNoMorePokemons] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(pokemons);
     const initialLoad = () => {
       const initialPokemons = pokemons.slice(0, rateLimit);
       setPaginatedPokemons(initialPokemons);
