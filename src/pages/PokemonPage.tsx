@@ -1,9 +1,10 @@
+import "./PokemonPage.css";
 import CustomCarousel from "@/components/Carousel/CustomCarousel";
 import PokeBackButton from "@/components/PokeBackButton/PokeBackButton";
 import PokemonType from "@/components/ui/PokemonType";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePokemonContext } from "@/context/PokemonContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface Sprites {
@@ -14,6 +15,7 @@ function PokemonPage() {
   const navigate = useNavigate();
   const { selectedPokemon } = usePokemonContext();
   const [isImageLoading, setIsImageLoading] = useState(true);
+  const [showGif, setShowGif] = useState(false);
 
   const onImageLoad = () => {
     setIsImageLoading(false);
@@ -38,12 +40,33 @@ function PokemonPage() {
     const firstPart = name.split("-")[0];
     return firstPart.charAt(0).toUpperCase() + firstPart.slice(1);
   }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowGif(true);
+    }, 1450);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const frontSprites = extractFrontSprites(selectedPokemon.sprites);
 
   return (
     <div className="flex flex-col">
-      <PokeBackButton onAction={() => navigate(-1)} />
+      <div className="w-full">
+        <PokeBackButton onAction={() => navigate(-1)} />
+        {showGif && (
+          <>
+            <img
+              className="gif absolute top-8 left-16 scale-75 fadeIn"
+              src={selectedPokemon.sprites.other.showdown.front_default}
+              alt={selectedPokemon.name}
+            />
+            <p className="text-xs absolute top-4 left-16 opacity-20 fadeInOut">
+              Click on the Pokéball to go back
+            </p>
+          </>
+        )}
+      </div>
       <div className="upper-section flex flex-col justify-center items-center p-5 mt-5">
         <h2
           className="text-5xl  text-gray-900 dark:text-white text-start mb-5"
