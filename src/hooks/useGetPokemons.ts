@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { usePokemonContext } from "@/context/PokemonContext";
+import { Pokemon, usePokemonContext } from "@/context/PokemonContext";
 
-const fetchPokemons = async (pokemons) => {
+const fetchPokemons = async (pokemons: Pokemon[]) => {
   const responses = await Promise.all(
-    pokemons.map((pokemon) => axios.get(pokemon.url).then((res) => res.data))
+    pokemons.map((pokemon: Pokemon) => axios.get(pokemon.url).then((res) => res.data))
   );
   return responses;
 };

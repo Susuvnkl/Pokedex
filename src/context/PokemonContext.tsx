@@ -26,10 +26,10 @@ interface PokemonProviderProps {
 
 const rateLimit = 20;
 
-interface Pokemon {
+export type Pokemon = {
   name: string;
   url: string;
-}
+};
 
 export const PokemonProvider: React.FC<PokemonProviderProps> = ({ children }) => {
   const [selectedPokemon, setSelectedPokemon] = useState<any>(null);
