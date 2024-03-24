@@ -9,6 +9,12 @@ interface PokemonContextType {
   loadMore: () => void;
   noMorePokemons: boolean;
   discoverPokemons: () => void;
+  page: number;
+  // fetchInfinitePokemons: ({ pageParam }: { pageParam: number }) => Promise<{
+  //   data: Pokemon[]; // Changed from any[] to Pokemon[]
+  //   currentPage: number;
+  //   nextPage: number | null;
+  // }>;
 }
 
 const PokemonContext = createContext<PokemonContextType | undefined>(undefined);
@@ -39,11 +45,13 @@ export const PokemonProvider: React.FC<PokemonProviderProps> = ({ children }) =>
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [paginatedPokemons, setPaginatedPokemons] = useState<Pokemon[]>([]);
   const [noMorePokemons, setNoMorePokemons] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(0);
 
   useEffect(() => {
     const initialLoad = () => {
       const initialPokemons = pokemons.slice(0, rateLimit);
       setPaginatedPokemons(initialPokemons);
+      setPage(1);
       if (initialPokemons.length < rateLimit) {
         setNoMorePokemons(true);
       } else {
@@ -60,6 +68,7 @@ export const PokemonProvider: React.FC<PokemonProviderProps> = ({ children }) =>
     );
     if (nextPokemons.length > 0) {
       setPaginatedPokemons(paginatedPokemons.concat(nextPokemons));
+      setPage((prev) => prev + 1);
     } else {
       setNoMorePokemons(true);
     }
@@ -89,6 +98,8 @@ export const PokemonProvider: React.FC<PokemonProviderProps> = ({ children }) =>
         loadMore,
         noMorePokemons,
         discoverPokemons,
+        page,
+        // fetchInfinitePokemons,
       }}
     >
       {children}
