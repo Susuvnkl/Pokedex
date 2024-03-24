@@ -7,7 +7,8 @@ const rateLimit = 20;
 
 export const useGetInfinitePokemons = (): {
   InfinitePokemons: any | undefined;
-  status: { status: string; error: Error | null };
+  isError: boolean;
+  isLoading: boolean;
   fetchNextPage: () => void;
 } => {
   const { pokemons } = usePokemonContext();
@@ -40,7 +41,7 @@ export const useGetInfinitePokemons = (): {
     };
   };
 
-  const { data, status, error, fetchNextPage } = useInfiniteQuery({
+  const { data, isError, isLoading, fetchNextPage } = useInfiniteQuery({
     queryKey: ["infinitePokemons", pokemons],
     queryFn: fetchInfinitePokemons,
     initialPageParam: 0,
@@ -49,10 +50,8 @@ export const useGetInfinitePokemons = (): {
 
   return {
     InfinitePokemons: data || [],
-    status: {
-      status,
-      error,
-    },
+    isError,
+    isLoading,
     fetchNextPage,
   };
 };
