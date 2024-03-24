@@ -52,14 +52,11 @@ function PokemonCard(props: PokemonCardProps) {
 
       <div className="lower-section shadow-neon-light bg-white bg-opacity-35 dark:shadow-neon-dark border-neon-light dark:bg-opacity-5 dark:border-neon-dark p-3 pt-1 rounded-bl-lg rounded-br-lg">
         <div className="flex flex-row justify-between">
-          <p className="text-xs">
-            {" "}
-            {pokemonId === "skeleton" && isImageLoading ? (
-              <Skeleton className="w-[18px] h-[16px] py-2" />
-            ) : (
-              `#${pokemonId}`
-            )}
-          </p>
+          {pokemonId === "skeleton" && isImageLoading ? (
+            <Skeleton className="w-[18px] h-[16px] py-2" />
+          ) : (
+            <p className="text-xs">#{pokemonId}</p>
+          )}
         </div>
 
         {pokemonName === "skeleton" && isImageLoading ? (
@@ -76,19 +73,6 @@ function PokemonCard(props: PokemonCardProps) {
           </h2>
         )}
 
-        {/* <h2
-          className="text-xl  text-gray-900 dark:text-white text-start"
-          style={{
-            WebkitFilter: "drop-shadow(0 0 1px rgba(255, 255, 255, 1))",
-            filter: "drop-shadow(0 0 1px rgba(255, 255, 255, 0.5))",
-          }}
-        >
-          {pokemonName === "skeleton" ? (
-            <Skeleton className="w-[78px] h-[28px]" />
-          ) : (
-            formatPokemonName(pokemonName)
-          )}
-        </h2> */}
         <div className="flex justify-center space-x-2 mt-2">
           <PokemonType
             isImageLoading={isImageLoading}

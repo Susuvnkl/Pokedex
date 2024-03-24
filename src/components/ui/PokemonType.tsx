@@ -26,7 +26,6 @@ function PokemonType(props: PokemonTypeProps) {
   }, [types]);
 
   if (types === "skeleton" && isImageLoading) {
-    console.log("skelton");
     return (
       <Skeleton className="type-wrapper flex w-[100px] h-[20px] rounded overflow-hidden relative shadow-md" />
     );

@@ -62,8 +62,6 @@ function FilterPokemons() {
   };
 
   useEffect(() => {
-    console.log("test render", { filter: filterState });
-
     if (pokemons) {
       setPokemons(pokemons);
     }
