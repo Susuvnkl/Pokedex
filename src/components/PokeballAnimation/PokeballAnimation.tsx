@@ -16,7 +16,6 @@ function PokeballAnimation(props: PokeballAnimationProps) {
                 </span>
               </span>
             </div>
-            {/* <div className="mon"></div> */}
             <div className="explode"></div>
           </div>
         )}
@@ -29,7 +28,6 @@ function PokeballAnimation(props: PokeballAnimationProps) {
                 </span>
               </span>
             </div>
-            {/* <div className="mon"></div> */}
             <div className="explode"></div>
           </div>
         )}

@@ -9,8 +9,8 @@
 
 .fadeIn {
   animation-name: fadeIn;
-  animation-duration: 1s; /* Adjust the time to your liking */
-  animation-fill-mode: forwards; /* Keeps the element visible after the animation completes */
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
 }
 
 @keyframes fadeInOut {
@@ -27,6 +27,6 @@
 
 .fadeInOut {
   animation-name: fadeInOut;
-  animation-duration: 3s; /* Total duration for both fade in and out */
+  animation-duration: 3s;
   animation-fill-mode: forwards;
 }

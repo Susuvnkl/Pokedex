@@ -32,7 +32,6 @@ function PokemonCard(props: PokemonCardProps) {
       onMouseLeave={onHoverChange ? () => onHoverChange(false) : () => {}}
       style={{ cursor: onHoverChange ? "none" : "auto" }}
     >
-      {/* Upper Section */}
       <div className="upper-section flex flex-col justify-center items-center p-5 ">
         <div className="image-container bg-white bg-opacity-40 inline-block rounded-full overflow-hidden shadow-neon-light dark:bg-black dark:bg-opacity-40 dark:shadow-neon-dark p-2">
           <img
@@ -51,7 +50,6 @@ function PokemonCard(props: PokemonCardProps) {
         </div>
       </div>
 
-      {/* Lower Section */}
       <div className="lower-section shadow-neon-light bg-white bg-opacity-35 dark:shadow-neon-dark border-neon-light dark:bg-opacity-5 dark:border-neon-dark p-3 pt-1 rounded-bl-lg rounded-br-lg">
         <div className="flex flex-row justify-between">
           {pokemonId && <p className="text-xs">#{pokemonId}</p>}

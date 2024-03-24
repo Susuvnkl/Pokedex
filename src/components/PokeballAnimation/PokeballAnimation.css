@@ -1,24 +1,8 @@
-/* 
-  The css for the pokeball sprites is quite long, but fairly simple.
-  And the bouncing animation is cute, but again pretty straight-forward with
-  some well-timed squash/stretch.
-
-  But I am quite excited and proud of the throw/exit animations on the pokemon
-  sprites. There's a few really cool techniques I dreamt up like using a color-dodge
-  blend on the sprite over the top of a heavily blurred, hue-rotated and brightened
-  animation of the pokemon sprite.
-
-*/
-
-/* pokeballs code */
-
 :root {
   --cell: 41px;
   --celly: 40px;
   --ecell: 240px;
   --offset-poke: var(--cell) * 0;
-  /* --slowmo: 5s; */
-  /* --slowsplode: 2s; */
 }
 
 .ball {
@@ -195,32 +179,6 @@
   margin: 2px;
   position: relative;
 }
-
-/* .pkmn .mon {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-} */
-
-/* .pkmn .mon:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  transform-origin: center 125px;
-  background-image: var(--poke1);
-} */
-
-/* .pkmn:nth-child(2) .mon:before {
-  background-image: var(--poke2);
-} */
 
 .pkmn .ball {
   position: absolute;
@@ -459,7 +417,6 @@
 .pkmn.exit .ball .sprite:before {
   animation-delay: 0s;
 }
-/* background-position-y: calc(var(--cell) y * 10 - 1.5); */
 
 @keyframes explode {
   0% {
@@ -573,8 +530,6 @@
   display: flex;
   position: absolute;
   width: 90%;
-  /* margin-bottom: 60px; */
-  /* margin-top: -40px; */
   justify-content: center;
   scale: 1;
 }

@@ -35,8 +35,6 @@ function PokeBackButton(props: PokeBackButtonProps) {
               </span>
             </span>
           </div>
-          {/* <div className="mon"></div> */}
-          {/* <div className="explode"></div> */}
         </div>
       </div>
     </div>

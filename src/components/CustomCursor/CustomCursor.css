@@ -16,7 +16,7 @@
   top: 200px;
   left: 35px;
   height: 5px;
-  width: 5px; /* Closed */
+  width: 5px;
   box-shadow: 30px 35px 0 0 var(--black), 35px 35px 0 0 var(--black), 40px 35px 0 0 var(--black),
     45px 35px 0 0 var(--black), 20px 40px 0 0 var(--black), 25px 40px 0 0 var(--black),
     30px 40px 0 0 var(--red), 35px 40px 0 0 var(--dark_red), 40px 40px 0 0 var(--dark_red),

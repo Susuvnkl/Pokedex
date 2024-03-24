@@ -30,7 +30,6 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      {/* Your app content */}
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <PokemonProvider>

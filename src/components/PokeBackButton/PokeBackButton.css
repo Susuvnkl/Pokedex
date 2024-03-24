@@ -210,12 +210,6 @@
   100% {
     background-position-y: -400px;
   }
-  /* 95% {
-    background-position-y: -320px;
-  }
-  100% {
-    background-position-y: -360px;
-  } */
 }
 
 @keyframes throw-shadow {
