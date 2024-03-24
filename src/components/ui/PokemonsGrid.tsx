@@ -9,8 +9,8 @@ import { useGetInfinitePokemons } from "@/hooks/useGetInfinitePokemons";
 import { Label } from "@radix-ui/react-dropdown-menu";
 
 const pokemonData = {
-  id: 1,
-  name: "Pikachu",
+  id: "skeleton",
+  name: "skeleton",
   sprites: {
     other: {
       "official-artwork": {
@@ -18,7 +18,7 @@ const pokemonData = {
       },
     },
   },
-  types: [{ type: { name: "grass" } }, { type: { name: "poison" } }],
+  types: "skeleton",
 };
 
 const mockPokemons = new Array(20).fill(pokemonData);
@@ -40,6 +40,10 @@ function PokemonGrid() {
       fetchNextPage();
     }
   }, [inView, fetchNextPage]);
+
+  useEffect(() => {
+    console.log(InfinitePokemons);
+  }, [InfinitePokemons]);
 
   return (
     <div className="flex flex-col items-center pb-8">
@@ -87,7 +91,7 @@ function PokemonGrid() {
                   pokemonSpritesFrontDefault={
                     pokemon.sprites.other["official-artwork"].front_default
                   }
-                  pokemonTypes={pokemon.types.map((t: any) => t.type.name)}
+                  pokemonTypes={pokemon.types}
                 />
               </div>
             );

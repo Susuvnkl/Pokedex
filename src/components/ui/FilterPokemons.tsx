@@ -10,24 +10,15 @@ import { Label } from "@/components/ui/label";
 import { usePokemonContext } from "@/context/PokemonContext";
 import { pokemonColors } from "@/data/pokemonsColor";
 
-const initialState: Filter = {
-  name: "",
-  id: "",
-  type: "",
-  gender: "",
-  color: "",
-  ability: "",
-};
-
 function FilterPokemons() {
-  const [filterState, setFilterState] = useState<Filter>(initialState);
   const [inputValues, setInputValues] = useState<{ name: string; id: string }>({
     name: "",
     id: "",
   });
   const [advancedFilter, setAdvancedFilter] = useState<boolean>(false);
+  const { setNoMorePokemons, setPokemons, filterState, initialState, setFilterState } =
+    usePokemonContext();
   const { pokemons } = usePokemonList(filterState);
-  const { setPokemons, discoverPokemons } = usePokemonContext();
 
   function processInputValue(value: string): string {
     if (/^0\d+$/.test(value)) {
@@ -65,7 +56,14 @@ function FilterPokemons() {
     }));
   };
 
+  const discoverPokemons = () => {
+    setFilterState({ ...initialState, discover: true });
+    setNoMorePokemons(true);
+  };
+
   useEffect(() => {
+    console.log("test render", { filter: filterState });
+
     if (pokemons) {
       setPokemons(pokemons);
     }

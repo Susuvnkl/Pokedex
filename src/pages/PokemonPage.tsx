@@ -107,7 +107,10 @@ function PokemonPage() {
             <p className="text-m">Type:</p>
           </div>
           <div className="flex justify-center space-x-2 mt-2">
-            <PokemonType types={selectedPokemon.types.map((t: any) => t.type.name)} />
+            <PokemonType
+              isImageLoading={isImageLoading}
+              types={selectedPokemon.types.map((t: any) => t.type.name)}
+            />
           </div>
         </div>
       </div>

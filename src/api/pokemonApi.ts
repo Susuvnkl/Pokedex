@@ -101,3 +101,15 @@ export const fetchPokemonsByAbility = async (abilityName: string): Promise<any[]
 export const fetchEvolutionChainById = (id: string | number): Promise<any> => {
   return fetchResource("pokemon-species", id, "evolution_chain");
 };
+
+export const discoverPokemons = async () => {
+  const pokemonList = Array.from({ length: 20 }, () => {
+    const randomNumber = Math.floor(Math.random() * 101) + 100;
+    return {
+      name: `Pokemon ${randomNumber}`,
+      url: `${BASE_URL}/pokemon/${randomNumber}`,
+    };
+  });
+
+  return pokemonList;
+};

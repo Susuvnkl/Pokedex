@@ -1,25 +1,36 @@
 import { pokemonTypesWithColors } from "@/data/pokemonTypesWithColors";
 import { useEffect, useState } from "react";
+import { Skeleton } from "./skeleton";
 
 interface PokemonTypeProps {
-  types: string[];
+  types: "skeleton" | string[];
+  isImageLoading: boolean;
 }
 
 function PokemonType(props: PokemonTypeProps) {
   const [typesWithColors, setTypesWithColors] = useState<{ typeName: string; color: string }[]>([]);
-  const { types } = props;
+  const { types, isImageLoading } = props;
 
   useEffect(() => {
-    const processedTypes = types.map((type) => {
-      const foundType = pokemonTypesWithColors.find(
-        (pokemonType) => pokemonType.name === type.toLowerCase()
-      );
-      return foundType
-        ? { typeName: type.charAt(0).toUpperCase() + type.slice(1), color: foundType.color }
-        : { typeName: type, color: "#FFFFFF" };
-    });
-    setTypesWithColors(processedTypes);
+    if (types !== "skeleton") {
+      const processedTypes = types.map((type) => {
+        const foundType = pokemonTypesWithColors.find(
+          (pokemonType) => pokemonType.name === type.toLowerCase()
+        );
+        return foundType
+          ? { typeName: type.charAt(0).toUpperCase() + type.slice(1), color: foundType.color }
+          : { typeName: type, color: "#FFFFFF" };
+      });
+      setTypesWithColors(processedTypes);
+    }
   }, [types]);
+
+  if (types === "skeleton" && isImageLoading) {
+    console.log("skelton");
+    return (
+      <Skeleton className="type-wrapper flex w-[100px] h-[20px] rounded overflow-hidden relative shadow-md" />
+    );
+  }
 
   return (
     <div
@@ -47,7 +58,9 @@ function PokemonType(props: PokemonTypeProps) {
               zIndex: 1,
             }}
           >
-            <span style={{ paddingLeft: "2px" }}>{typesWithColors[0].typeName}</span>
+            <span className={"text-sm"} style={{ paddingLeft: "2px" }}>
+              {typesWithColors[0].typeName}
+            </span>
           </div>
 
           <div
@@ -59,9 +72,10 @@ function PokemonType(props: PokemonTypeProps) {
               justifyContent: "center",
               color: "white",
               position: "relative",
+              marginRight: "-8px",
             }}
           >
-            <span>{typesWithColors[1].typeName}</span>
+            <span className="text-sm">{typesWithColors[1].typeName}</span>
 
             <div
               style={{

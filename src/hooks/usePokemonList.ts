@@ -6,6 +6,7 @@ import {
   fetchPokemonsByGender,
   fetchPokemonsByAbility,
   fetchPokemonsByColor,
+  discoverPokemons,
 } from "@/api/pokemonApi";
 import { useEffect } from "react";
 import { usePokemonContext } from "@/context/PokemonContext";
@@ -17,6 +18,7 @@ export type Filter = {
   gender: string;
   ability: string;
   color: string;
+  discover: boolean;
 };
 
 export const usePokemonList = (filter: Filter) => {
@@ -36,6 +38,9 @@ export const usePokemonList = (filter: Filter) => {
     }
     if (filter.color) {
       return await fetchPokemonsByColor(filter.color);
+    }
+    if (filter.discover) {
+      return await discoverPokemons();
     }
     return await fetchPokemons();
   };

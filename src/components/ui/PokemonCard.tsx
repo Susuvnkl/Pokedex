@@ -3,10 +3,10 @@ import PokemonType from "./PokemonType";
 import { Skeleton } from "./skeleton";
 
 interface PokemonCardProps {
-  pokemonUrl?: string;
-  pokemonId?: string;
-  pokemonName: string;
-  pokemonTypes?: string[];
+  pokemonUrl?: string | "";
+  pokemonId?: string | "skeleton";
+  pokemonName: string | "skeleton";
+  pokemonTypes?: string[] | "skeleton";
   pokemonSpritesFrontDefault: string;
   onHoverChange?: (isHovered: boolean) => void;
 }
@@ -27,7 +27,7 @@ function PokemonCard(props: PokemonCardProps) {
   return (
     <div
       key={pokemonId}
-      className="pokemon-card bg-white bg-opacity-50 m-2 max-w-[175px] mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative"
+      className="pokemon-card bg-white bg-opacity-50 m-2 max-w-[180px] mx-auto rounded-lg shadow-md dark:bg-black dark:bg-opacity-65 dark:shadow-neon-dark shadow-neon-light overflow-hidden relative"
       onMouseEnter={onHoverChange ? () => onHoverChange(true) : () => {}}
       onMouseLeave={onHoverChange ? () => onHoverChange(false) : () => {}}
       style={{ cursor: onHoverChange ? "none" : "auto" }}
@@ -52,22 +52,49 @@ function PokemonCard(props: PokemonCardProps) {
 
       <div className="lower-section shadow-neon-light bg-white bg-opacity-35 dark:shadow-neon-dark border-neon-light dark:bg-opacity-5 dark:border-neon-dark p-3 pt-1 rounded-bl-lg rounded-br-lg">
         <div className="flex flex-row justify-between">
-          {pokemonId && <p className="text-xs">#{pokemonId}</p>}
+          <p className="text-xs">
+            {" "}
+            {pokemonId === "skeleton" && isImageLoading ? (
+              <Skeleton className="w-[18px] h-[16px] py-2" />
+            ) : (
+              `#${pokemonId}`
+            )}
+          </p>
         </div>
-        <h2
+
+        {pokemonName === "skeleton" && isImageLoading ? (
+          <Skeleton className="w-[78px] h-[28px] mt-2" />
+        ) : (
+          <h2
+            className="text-xl  text-gray-900 dark:text-white text-start"
+            style={{
+              WebkitFilter: "drop-shadow(0 0 1px rgba(255, 255, 255, 1))",
+              filter: "drop-shadow(0 0 1px rgba(255, 255, 255, 0.5))",
+            }}
+          >
+            {formatPokemonName(pokemonName)}
+          </h2>
+        )}
+
+        {/* <h2
           className="text-xl  text-gray-900 dark:text-white text-start"
           style={{
             WebkitFilter: "drop-shadow(0 0 1px rgba(255, 255, 255, 1))",
             filter: "drop-shadow(0 0 1px rgba(255, 255, 255, 0.5))",
           }}
         >
-          {formatPokemonName(pokemonName)}
-        </h2>
-        {pokemonTypes && (
-          <div className="flex justify-center space-x-2 mt-2">
-            <PokemonType types={pokemonTypes} />
-          </div>
-        )}
+          {pokemonName === "skeleton" ? (
+            <Skeleton className="w-[78px] h-[28px]" />
+          ) : (
+            formatPokemonName(pokemonName)
+          )}
+        </h2> */}
+        <div className="flex justify-center space-x-2 mt-2">
+          <PokemonType
+            isImageLoading={isImageLoading}
+            types={pokemonTypes ? pokemonTypes : "skeleton"}
+          />
+        </div>
       </div>
     </div>
   );

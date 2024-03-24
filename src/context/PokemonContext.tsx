@@ -1,3 +1,4 @@
+import { Filter } from "@/hooks/usePokemonList";
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 interface PokemonContextType {
@@ -8,13 +9,11 @@ interface PokemonContextType {
   paginatedPokemons: Pokemon[];
   loadMore: () => void;
   noMorePokemons: boolean;
-  discoverPokemons: () => void;
   page: number;
-  // fetchInfinitePokemons: ({ pageParam }: { pageParam: number }) => Promise<{
-  //   data: Pokemon[]; // Changed from any[] to Pokemon[]
-  //   currentPage: number;
-  //   nextPage: number | null;
-  // }>;
+  filterState: Filter;
+  setFilterState: (e: Filter) => void;
+  initialState: Filter;
+  setNoMorePokemons: (e: boolean) => void;
 }
 
 const PokemonContext = createContext<PokemonContextType | undefined>(undefined);
@@ -38,7 +37,15 @@ export type Pokemon = {
   url: string;
 };
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const initialState: Filter = {
+  name: "",
+  id: "",
+  type: "",
+  gender: "",
+  color: "",
+  ability: "",
+  discover: false,
+};
 
 export const PokemonProvider: React.FC<PokemonProviderProps> = ({ children }) => {
   const [selectedPokemon, setSelectedPokemon] = useState<any>(null);
@@ -46,6 +53,7 @@ export const PokemonProvider: React.FC<PokemonProviderProps> = ({ children }) =>
   const [paginatedPokemons, setPaginatedPokemons] = useState<Pokemon[]>([]);
   const [noMorePokemons, setNoMorePokemons] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
+  const [filterState, setFilterState] = useState<Filter>(initialState);
 
   useEffect(() => {
     const initialLoad = () => {
@@ -74,19 +82,6 @@ export const PokemonProvider: React.FC<PokemonProviderProps> = ({ children }) =>
     }
   };
 
-  const discoverPokemons = () => {
-    const pokemonList = Array.from({ length: 20 }, () => {
-      const randomNumber = Math.floor(Math.random() * 101) + 100; // Generate random number between 100 and 200
-      return {
-        name: `Pokemon ${randomNumber}`,
-        url: `${BASE_URL}/pokemon/${randomNumber}`,
-      };
-    });
-
-    setPokemons(pokemonList); // Assuming setPokemons is a function in your context/state management to update the pokemons list
-    setNoMorePokemons(true); // Assuming setNoMorePokemons is a function in your context/state management to indicate no more pokemons can be discovered
-  };
-
   return (
     <PokemonContext.Provider
       value={{
@@ -97,9 +92,11 @@ export const PokemonProvider: React.FC<PokemonProviderProps> = ({ children }) =>
         paginatedPokemons,
         loadMore,
         noMorePokemons,
-        discoverPokemons,
         page,
-        // fetchInfinitePokemons,
+        filterState,
+        setFilterState,
+        initialState,
+        setNoMorePokemons,
       }}
     >
       {children}
