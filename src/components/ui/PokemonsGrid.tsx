@@ -4,9 +4,9 @@ import { usePokemonContext } from "@/context/PokemonContext";
 import CustomCursor from "../CustomCursor/CustomCursor";
 import { useEffect, useState } from "react";
 import { useGetPokemons } from "@/hooks/useGetPokemons";
-import { Button } from "./button";
 import { useInView } from "react-intersection-observer";
 import { useGetInfinitePokemons } from "@/hooks/useGetInfinitePokemons";
+import { Label } from "@radix-ui/react-dropdown-menu";
 
 const pokemonData = {
   id: 1,
@@ -21,11 +21,10 @@ const pokemonData = {
   types: [{ type: { name: "grass" } }, { type: { name: "poison" } }],
 };
 
-// Create an array of 20 elements using the hardcoded data
 const mockPokemons = new Array(20).fill(pokemonData);
 
 function PokemonGrid() {
-  const { isFetching, error } = useGetPokemons();
+  const { error } = useGetPokemons();
   const [isCursorHovered, setIsCursorHovered] = useState(false);
   const { setSelectedPokemon, noMorePokemons } = usePokemonContext();
   const navigate = useNavigate();
@@ -95,12 +94,8 @@ function PokemonGrid() {
           })}
       </div>
       <div ref={ref}></div>
-      {!noMorePokemons && (
-        <Button onClick={() => fetchNextPage()} disabled={isFetching} className="mt-5">
-          Load More
-        </Button>
-      )}
-      {isError && <p>Error loading pokemons: {error?.message}</p>}
+      {noMorePokemons && <Label> No more Pokémons</Label>}
+      {isError && <p>Error loading Pokémon: {error?.message}</p>}
     </div>
   );
 }
